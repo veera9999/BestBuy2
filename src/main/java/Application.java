@@ -6,6 +6,9 @@ public class Application {
     {
        UserOperations userOperations=new UserOperations();
        userOperations.showAll();
+       ProductsDAO.displayAll();
+       OrderOperations.displayOrders();
+
 
     }
 }
