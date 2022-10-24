@@ -4,15 +4,12 @@ import java.util.HashMap;
 
 public class Orders {
 
-    public static  int orderNumber=0;
 
-    public int orderNO;
+    public int orderID;
     public String productID;
     public String productName;
-    public String category;
     public int quantity;
     public double price;
-
     public String orderStatus;
 
     public static final String ORDER_DELIVERED = "ORDER_DELIVERED";
@@ -30,12 +27,5 @@ public class Orders {
         orderStatusMap.put(4,ORDER_DELIVERED);
     }
 
-    public static String [] headers = {"ORDER_NO","PRODUCT_ID","PRODUCT_NAME","CATEGORY","QUANTITY","PRICE","ORDER_STATUS"};
-
-
-    public static int generateOrderNumber() {
-        orderNumber+=1;
-        return orderNumber;
-    }
-
+    public static String [] headers = {"ORDER_ID","PRODUCT_ID","PRODUCT_NAME","QUANTITY","PRICE","ORDER_STATUS"};
 }

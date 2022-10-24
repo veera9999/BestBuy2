@@ -5,10 +5,11 @@ import java.sql.*;
 public class ProductsDAO {
     public static void displayAll()
     {
+        Connection connection = null;
+        ResultSet resultSet = null;
         try {
-            Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/bestbuy", "root", "JavaSucks");
+            connection = ConnectionHandler.getConnection();
             Statement statement = connection.createStatement();
-            ResultSet resultSet;
             resultSet = statement.executeQuery(Queries.QUERY_TO_READ_PRODUCTS);
             while (resultSet.next()) {
                 System.out.println(resultSet.getString("productID")+"     "+
@@ -17,9 +18,18 @@ public class ProductsDAO {
                         resultSet.getString("subCategory")+"                   "+
                         resultSet.getString("productPrice"));
             }
-
         } catch (Exception e) {
+
             e.printStackTrace();
+        }
+        finally{
+            try {
+                resultSet.close();
+                connection.close();
+
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 

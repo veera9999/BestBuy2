@@ -5,44 +5,65 @@ import java.sql.*;
 public class OrdersDAO {
 
     public static void addToOrders(String productID,int quantity) {
+        Connection connection = null;
+        ResultSet resultSet = null;
         try {
-            Connection connection1 = DriverManager.getConnection("jdbc:mysql://localhost:3306/bestbuy", "root", "JavaSucks");
-            Statement statement1 = connection1.createStatement();
-            ResultSet resultSet1;
-            resultSet1 = statement1.executeQuery(String.format(Queries.QUERY_TO_READ_PRODUCT_BY_ID,productID));
-            resultSet1.next();
-                    statement1.executeUpdate(String.format(Queries.QUERY_TO_ADD_ORDER,
-                    resultSet1.getString("productID"),
-                    resultSet1.getString("productName"),
+            connection = ConnectionHandler.getConnection();
+            Statement statement = connection.createStatement();
+            resultSet = statement.executeQuery(String.format(Queries.QUERY_TO_READ_PRODUCT_BY_ID,productID));
+            resultSet.next();
+                    statement.executeUpdate(String.format(Queries.QUERY_TO_ADD_ORDER,
+                    resultSet.getString("productID"),
+                    resultSet.getString("productName"),
                     quantity,
-                    resultSet1.getString("productPrice"),
+                    resultSet .getString("productPrice"),
                     Orders.orderStatusMap.get(1)));
             System.out.println("Order Placed Successfully");
         } catch (Exception e) {
+
             e.printStackTrace();
+        }
+        finally{
+            try {
+                resultSet.close();
+                connection.close();
+
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 
     public static void updateOrder(int orderID,int choice)
     {
+        Connection connection = null;
         try {
-
-            Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/bestbuy", "root", "JavaSucks");
+            connection = ConnectionHandler.getConnection();
             Statement statement = connection.createStatement();
-            statement.executeUpdate(String.format(Queries.QUERY_TO_UPDATE_ORDER,Orders.orderStatusMap.get(choice),orderID));
-
+            statement.executeUpdate(String.format(Queries.QUERY_TO_UPDATE_ORDER, Orders.orderStatusMap.get(choice),orderID));
+            System.out.println("OrderStatus Updated Successfully");
 
         } catch (Exception e) {
+
             e.printStackTrace();
+        }
+        finally{
+            try {
+                connection.close();
+
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 
     public static void displayOrders()
     {
+        Connection connection = null;
+        ResultSet resultSet = null;
         try {
-            Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/bestbuy", "root", "JavaSucks");
+            connection = ConnectionHandler.getConnection();
             Statement statement = connection.createStatement();
-            ResultSet resultSet;
             resultSet = statement.executeQuery(Queries.QUERY_TO_READ_ORDERS);
             while (resultSet.next()) {
                 System.out.println(resultSet.getInt("orderID")+"   "+
@@ -54,7 +75,20 @@ public class OrdersDAO {
             }
 
         } catch (Exception e) {
+
             e.printStackTrace();
+        }
+        finally{
+            try {
+                resultSet.close();
+                connection.close();
+
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 }
+
+
+

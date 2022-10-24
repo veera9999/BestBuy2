@@ -4,11 +4,15 @@ import java.io.*;
 public class Application {
     public static void main(String [] args)
     {
-       UserOperations userOperations=new UserOperations();
-       userOperations.showAll();
-       ProductsDAO.displayAll();
-       OrderOperations.displayOrders();
-
-
+      OrderOperations orderOperations=new OrderOperations();
+      ProductsDAO.displayAll();
+      System.out.println();
+      orderOperations.orderProduct();
+      System.out.println();
+      orderOperations.displayOrders();
+      System.out.println();
+      orderOperations.updateOrder();
+      System.out.println();
+      orderOperations.displayOrders();
     }
 }

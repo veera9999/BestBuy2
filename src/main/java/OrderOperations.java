@@ -5,7 +5,6 @@ public class OrderOperations {
     static  Scanner sc=new Scanner(System.in);
     public static void orderProduct()
     {
-
         System.out.println("Enter the productID:");
         String productID=sc.nextLine();
         System.out.println("Enter the Quantity:");
